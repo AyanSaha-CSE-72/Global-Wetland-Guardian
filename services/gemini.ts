@@ -2,6 +2,10 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { PredictionData, Language, MapData, GroundingSource, WetlandInsightData } from "../types";
 
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.API_KEY || '';
+
+// Debug: Log API key status (not the actual key)
+console.log('API Key Status:', apiKey ? `Loaded (${apiKey.substring(0, 10)}...)` : 'MISSING');
+
 const ai = new GoogleGenAI({ apiKey });
 
 // Helper: Exponential Backoff Retry
@@ -137,7 +141,7 @@ const validateWetlandInsightData = (data: any): data is WetlandInsightData => {
   return typeof data.location === 'string' && hasWeather && hasFish && hasStorm;
 };
 
-export const getHaorPrediction = async (haorName: string, lang: Language): Promise<PredictionData> => {
+export const getWetlandPrediction = async (locationName: string, lang: Language): Promise<PredictionData> => {
   if (!apiKey) throw new Error("API Key is missing. Please configure your API key.");
 
   const model = "gemini-2.5-flash";
@@ -145,13 +149,13 @@ export const getHaorPrediction = async (haorName: string, lang: Language): Promi
     ? "Provide the text content (descriptions, advice, reasons) in Bengali (Bangla). However, strictly keep the 'riskLevel' values as ['Low', 'Medium', 'High'] and 'movement' values as ['High', 'Medium', 'Low'] in English." 
     : "Provide the response in English.";
 
-  const prompt = `Analyze the current hypothetical conditions for ${haorName} in Bangladesh. 
+  const prompt = `Analyze the current conditions for ${locationName} - a wetland, delta, coastal area, or waterway location anywhere in the world. 
   ${languagePrompt}
-  Provide a safety report for fishermen covering:
-  1. Water Level Risk (Low/Medium/High) and rise probability.
-  2. Storm & Wind Risk (likelihood, wind direction, advice).
-  3. Fish Movement (High/Medium/Low, best time to fish, best zone).
-  4. Route Safety (Score 0-100, warning points, safe path suggestion).
+  Provide a comprehensive safety report for ALL users (tourists, travelers, fishermen, wetland workers, and local communities) covering:
+  1. Water Level Risk (Low/Medium/High) and rise probability - for all water activities and safety.
+  2. Storm & Wind Risk (likelihood, wind direction, advice) - for outdoor work, fishing, tourism, and travel.
+  3. Fish & Wildlife Activity (High/Medium/Low, best time for fishing or wildlife viewing, productive zones) - useful for fishermen AND ecotourists.
+  4. Route Safety (Score 0-100, warning points, safe path suggestion) - for navigation, fishing routes, tourism, and local transport.
   
   Return strictly valid JSON matching the schema.`;
 
@@ -226,15 +230,15 @@ export const getHaorPrediction = async (haorName: string, lang: Language): Promi
   try {
     return await retryOperation(apiCall);
   } catch (error: any) {
-    console.error("getHaorPrediction Final Error:", error);
+    console.error("getWetlandPrediction Final Error:", error);
     throw enhanceError(error, "Failed to generate prediction. Please try again.");
   }
 };
 
-export const generateFishermanAlert = async (
+export const generateSafetyAlert = async (
   name: string,
-  haor: string,
-  boatType: string,
+  location: string,
+  transportType: string,
   lang: Language
 ): Promise<string> => {
   if (!apiKey) throw new Error("API Key is missing.");
@@ -242,9 +246,10 @@ export const generateFishermanAlert = async (
   const model = "gemini-2.5-flash";
   const languageInstruction = lang === 'bn' ? "Write the alert in Bengali (Bangla)." : "Write the alert in English.";
   
-  const prompt = `Generate a personalized safety alert for an operator named ${name} who is going to ${haor} using a ${boatType}. 
+  const prompt = `Generate a personalized safety advisory for ${name} who is going to ${location} using a ${transportType}. 
   ${languageInstruction}
-  Include a weather warning, water or flood advisory, and specific safety instructions for their transport type. Keep it concise (under 150 words).`;
+  This person could be a tourist, traveler, fisherman, wetland worker, or local community member. 
+  Include: weather conditions, water safety advisory, storm/wind warnings, fishing conditions (if relevant), wildlife precautions, navigation guidance, and specific safety recommendations for their transport type and activities. Keep it concise (under 150 words).`;
 
   const apiCall = async () => {
     const response = await ai.models.generateContent({
@@ -261,46 +266,63 @@ export const generateFishermanAlert = async (
   try {
     return await retryOperation(apiCall);
   } catch (error: any) {
-    console.error("generateFishermanAlert Final Error:", error);
+    console.error("generateSafetyAlert Final Error:", error);
     throw enhanceError(error, "Failed to generate alert.");
   }
 };
 
 export const getChatResponse = async (history: { role: string; parts: { text: string }[] }[], newMessage: string, lang: Language) => {
-  if (!apiKey) throw new Error("API Key is missing.");
+  if (!apiKey) {
+    console.error("API Key is missing!");
+    throw new Error("API Key is missing. Please add VITE_GEMINI_API_KEY to your .env.local file.");
+  }
   
   const systemInstruction = lang === 'bn' 
-    ? "You are 'Haor Guardian AI', a helpful assistant for Bangladeshi fishermen. Answer primarily in Bengali (Bangla). Be polite, concise, and safety-focused."
-    : "You are 'Haor Guardian AI', a helpful assistant for Bangladeshi fishermen. Answer in English. Be polite, concise, and safety-focused.";
+    ? "You are 'Global Wetland Assistant', a helpful AI assistant for wetland areas worldwide. You help tourists, travelers, fishermen, wetland workers, and local communities with safety information, weather predictions, navigation guidance, tourism recommendations, local insights, and emergency assistance. Answer primarily in Bengali (Bangla). Be polite, informative, and safety-focused. When asked who you are, identify yourself as the Global Wetland Assistant - a comprehensive guide for wetland exploration and safety."
+    : "You are 'Global Wetland Assistant', a helpful AI assistant for wetland areas worldwide. You help tourists, travelers, fishermen, wetland workers, and local communities with safety information, weather predictions, navigation guidance, tourism recommendations, local insights, and emergency assistance. Answer in English. Be polite, informative, and safety-focused. When asked who you are, identify yourself as the Global Wetland Assistant - a comprehensive guide for wetland exploration and safety.";
 
   const apiCall = async () => {
-    const chat = ai.chats.create({
-      model: "gemini-2.5-flash",
-      config: {
-        systemInstruction: systemInstruction
-      },
-      history: history
-    });
+    try {
+      console.log('Creating chat with model: gemini-2.5-flash');
+      const chat = ai.chats.create({
+        model: "gemini-2.5-flash",
+        config: {
+          systemInstruction: systemInstruction
+        },
+        history: history
+      });
 
-    const result = await chat.sendMessage({ message: newMessage });
-    if (!result.text) throw new Error("Empty response from chat model.");
-    return result.text;
+      console.log('Sending message:', newMessage.substring(0, 50) + '...');
+      const result = await chat.sendMessage({ message: newMessage });
+      
+      if (!result.text) throw new Error("Empty response from chat model.");
+      console.log('Received response:', result.text.substring(0, 100) + '...');
+      return result.text;
+    } catch (error: any) {
+      console.error('API Call Error Details:', {
+        message: error.message,
+        status: error.status,
+        code: error.code,
+        stack: error.stack
+      });
+      throw error;
+    }
   };
 
   try {
     // We can allow fewer retries for chat to keep it responsive, or just 1 retry
-    return await retryOperation(apiCall, 1);
+    return await retryOperation(apiCall, 2);
   } catch (error: any) {
     console.error("getChatResponse Final Error:", error);
-    throw enhanceError(error, "Failed to send message.");
+    throw enhanceError(error, "Failed to send message. Please check your internet connection and API key.");
   }
 };
 
-export const getHaorMapDetails = async (haorName: string, lang: Language): Promise<MapData> => {
+export const getWetlandMapDetails = async (locationName: string, lang: Language): Promise<MapData> => {
   if (!apiKey) throw new Error("API Key is missing.");
   const model = "gemini-2.5-flash";
   const languageInstruction = lang === 'bn' ? "in Bengali (Bangla)" : "in English";
-  const prompt = `Using Google Maps, locate ${haorName} anywhere in the world. Provide a concise summary of its geography and key points of interest for wetland users ${languageInstruction}.`;
+  const prompt = `Using Google Maps, locate ${locationName} anywhere in the world. Provide a concise summary of its geography, ecosystem, tourism attractions, fishing zones, local community areas, and key points of interest for tourists, travelers, fishermen, wetland workers, and local communities ${languageInstruction}.`;
   
   const apiCall = async () => {
     const response = await ai.models.generateContent({
@@ -338,7 +360,7 @@ export const getHaorMapDetails = async (haorName: string, lang: Language): Promi
   try {
     return await retryOperation(apiCall);
   } catch (error: any) {
-    console.error("getHaorMapDetails Final Error:", error);
+    console.error("getWetlandMapDetails Final Error:", error);
     throw enhanceError(error, "Could not fetch map details.");
   }
 }
@@ -354,15 +376,15 @@ export const getWetlandInsights = async (
     ? "Write the descriptive fields in Bengali (Bangla), but keep the enum-like values in English: riskLevel must be one of ['Low', 'Medium', 'High'] and activityLevel must be one of ['High', 'Medium', 'Low']."
     : "Write the response in English.";
 
-  const prompt = `You are a global wetland safety analyst.
+  const prompt = `You are a global wetland safety analyst serving ALL users: tourists, travelers, fishermen, wetland workers, and local communities.
 Analyze the location: ${location}.
 ${languagePrompt}
 
 Return a cautious, practical safety brief for a wetland, delta, coastal, or floodplain area anywhere in the world.
 Focus on exactly three sections:
-1. Weather prediction: rain, visibility, water movement, and safe travel window.
-2. Fish insight: likely fish activity, productive zones, best time, and lure strategy.
-3. Storm alert: storm risk, wind risk, likely danger window, action steps, and evacuation advice.
+1. Weather prediction: rain, visibility, water movement, safe travel/work window, and safety advice for all activities (fishing, tourism, local work).
+2. Fish & Wildlife insight: fish activity for fishing, wildlife viewing opportunities, productive fishing zones OR best viewing zones, best time for fishing OR wildlife observation, and strategy/tips.
+3. Storm alert: storm risk, wind risk affecting boats/tourism/work, likely danger window, action steps, and evacuation/safety advice for everyone.
 
 Return only valid JSON matching the schema.`;
 

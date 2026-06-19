@@ -11,36 +11,53 @@
 ---
 
 ## 📝 Abstract
-This project presents **global-wetland-guardian**, a wetland-focused intelligence dashboard built to support fishers, local communities, and researchers working in haor, river basin, delta, and coastal regions. The system combines a **country-and-location selector**, **Gemini-powered wetland analysis**, **AI chat assistance**, and **interactive map previews** to generate location-specific guidance for weather, fish activity, and storm risk.
+This project presents **global-wetland-guardian**, a comprehensive wetland intelligence dashboard built to serve **tourists, travelers, fishermen, wetland workers, and local communities** worldwide. The system provides AI-powered insights for haor, river basin, delta, coastal, and wetland regions globally, combining a **country-and-location selector**, **Gemini-powered wetland analysis**, **AI chat assistance**, and **interactive map previews** to generate location-specific guidance for:
 
-Rather than relying on generic static warnings, the application turns a selected place into a structured AI query and produces a practical response for local decision-making. The dashboard is designed as a modern web application with dark mode support, multilingual UI, and shareable safety outputs.
+- **Safety Information** - Weather, storm alerts, and water conditions
+- **Weather Predictions** - Rain, visibility, and safe travel/work windows
+- **Navigation Guidance** - Safe routes and warning points
+- **Fishing & Wildlife Insights** - Fish activity for fishermen, wildlife viewing for tourists
+- **Tourism Recommendations** - Best viewing zones, optimal timing
+- **Local Insights** - Community areas, ecosystem information
+- **Emergency Assistance** - Safety advisories and evacuation guidance
+
+Rather than serving a single user group, the application adapts its guidance based on user needs - whether you're a tourist exploring, a fisherman working, or a local community member living in wetland areas.
 
 ---
 
 ## 🔍 Introduction
-Wetland communities often depend on rapidly changing environmental conditions. A small shift in weather, wind, water movement, or storm behavior can strongly affect fishing safety and daily planning.
+Wetland regions worldwide support diverse communities - from fishermen catching fish, to tourists exploring nature, to local workers maintaining ecosystems, and communities living in these areas. Each group faces unique challenges from rapidly changing environmental conditions.
 
-AI Haor Guardian is built to make this information easier to access. The app helps users:
+**Global Wetland Guardian** is built to serve everyone with:
 
-- Select a country and a wetland, city, or regional location
-- View the selected place on an embedded map
-- Ask the AI system for weather, fish, and storm insights
-- Generate fisherman-facing safety alerts
-- Chat with an AI assistant about wetland-related questions
+- **For Tourists**: Wildlife viewing zones, safe travel windows, tourism safety
+- **For Fishermen**: Fish activity, productive fishing zones, best fishing times
+- **For Workers**: Safe working conditions, route safety, weather advisories
+- **For Local Communities**: Emergency alerts, evacuation guidance, local insights
+- **For Travelers**: Navigation guidance, transport safety, destination information
 
-The project follows a research-style presentation so it can be used for academic showcases, hackathons, and climate-tech demonstrations.
+The app helps all users by:
+- Selecting any wetland location worldwide
+- Viewing the place on an embedded map with ecosystem info
+- Getting AI-powered weather, fishing, wildlife, and safety insights
+- Generating personalized safety advisories
+- Chatting with an AI assistant about any wetland-related questions
+
+The project is designed for global use, supporting multiple languages and serving wetland areas from the Sundarbans to the Everglades, Pantanal to Okavango Delta.
 
 ---
 
 ## 🎯 Problem Statement
-Many local users in wetland and coastal regions face the following challenges:
+Wetland areas worldwide face common challenges that affect diverse user groups:
 
-- Forecasts are too broad and not location-specific
-- Fishing safety guidance is often manual or delayed
-- Users cannot quickly interpret climate risk for their exact area
-- There is limited support for multilingual and mobile-friendly advisory tools
+- **For All Users**: Forecasts are too broad and not location-specific
+- **For Fishermen**: Fishing safety and fish activity guidance is often delayed or unavailable
+- **For Tourists**: Wildlife viewing information and tourism safety is limited
+- **For Workers**: Work safety conditions and route guidance needs improvement
+- **For Communities**: Quick access to emergency guidance and local insights is difficult
+- **Global Issue**: Limited support for multilingual, mobile-friendly advisory tools serving all user types
 
-**Goal:** build an AI-powered dashboard that converts a selected wetland location into actionable, location-aware guidance.
+**Goal:** Build an AI-powered dashboard that converts any selected wetland location into actionable, location-aware guidance for tourists, fishermen, workers, and local communities worldwide.
 
 ---
 
@@ -52,12 +69,17 @@ Many local users in wetland and coastal regions face the following challenges:
 - Fallback free-text location input for custom places
 
 ### **2. AI Inference Layer**
-- Gemini-based wetland insight generation
-- Location-aware prompts for weather prediction, fish insight, and storm alert outputs
-- Conversational AI support for follow-up questions
+- Gemini-based comprehensive wetland analysis
+- Multi-purpose prompts serving all user types
+- Location-aware weather, fishing, wildlife, tourism, and safety outputs
+- Conversational AI support for personalized follow-up questions
 
 ### **3. User Advisory Layer**
-- Fisherman alert generation
+- Personalized safety alert generation for all user types
+- Fishing conditions for fishermen
+- Wildlife viewing info for tourists
+- Work safety for wetland workers
+- Community safety for locals
 - PDF export of advisory content
 - Copy/share support for quick distribution
 
@@ -101,27 +123,35 @@ Many local users in wetland and coastal regions face the following challenges:
 ---
 
 ## 📊 Key Results
-The app is designed to generate structured AI outputs for three main advisory domains:
+The app generates structured AI outputs serving multiple user groups:
 
-| Output Type | Purpose |
-|------------|---------|
-| Weather Prediction | Summarizes local conditions and risk level |
-| Fish Insight | Highlights likely fish activity and useful zones |
-| Storm Alert AI | Provides storm-related safety guidance |
-| Fisherman Advisory | Generates a readable alert for local users |
+| Output Type | Serves | Purpose |
+|------------|--------|---------|
+| Weather Prediction | Everyone | Local conditions, risk level, safe time windows |
+| Fish & Wildlife | Fishermen & Tourists | Fish activity for fishing, wildlife viewing zones |
+| Storm Alert AI | Everyone | Storm safety, wind risk, evacuation guidance |
+| Safety Advisory | All Users | Personalized alerts for tourists, fishermen, workers, locals |
+| Navigation Guide | Travelers & Workers | Safe routes, warning points, transport safety |
 
-Because the system uses live AI generation, the content adapts to the selected location rather than relying on one fixed template.
+The system adapts content based on user needs - whether for fishing, tourism, work, or community safety.
 
 ---
 
 ## ⭐ Features
-- ✔ **Country + Wetland / Location Selector**
-- ✔ **Gemini-Powered Weather, Fish, and Storm Insights**
-- ✔ **Interactive Map Preview for Selected Place**
-- ✔ **AI Chat Assistant for Wetland Questions**
-- ✔ **Fisherman Alert Generation**
+- ✔ **Global Coverage**: Works with wetlands worldwide (Sundarbans, Everglades, Pantanal, Okavango, etc.)
+- ✔ **Multi-User Support**: Serves tourists, fishermen, workers, and local communities
+- ✔ **Country + Wetland Location Selector**
+- ✔ **Comprehensive AI Insights**:
+  - Weather predictions for all activities
+  - Fish activity for fishermen
+  - Wildlife viewing for tourists
+  - Safety guidance for workers
+  - Community alerts for locals
+- ✔ **Interactive Map Preview with Ecosystem Info**
+- ✔ **AI Chat Assistant** for personalized wetland questions
+- ✔ **Personalized Safety Advisories** for all user types
 - ✔ **PDF Export and Share Support**
-- ✔ **Multilingual UI Support**
+- ✔ **Multilingual UI Support** (English, Bengali, expandable)
 - ✔ **Dark Mode Friendly Design**
 - ✔ **Modern React + TypeScript Interface**
 
@@ -185,11 +215,17 @@ npm run build
 ---
 
 ## 📌 How It Works
-1. Open the dashboard or map page.
-2. Select a country and wetland/location.
-3. The app builds a location-aware prompt for Gemini.
-4. The AI service returns weather, fish, and storm insight.
-5. Users can review, copy, share, or export the advisory.
+1. Open the dashboard or map page
+2. Select a country and wetland/location from anywhere in the world
+3. The app builds a comprehensive location-aware prompt for Gemini AI
+4. AI analyzes conditions for multiple user needs:
+   - Fishing conditions for fishermen
+   - Wildlife viewing for tourists
+   - Safety conditions for workers
+   - Community alerts for locals
+5. Users receive tailored insights based on their activities
+6. Generate personalized safety advisory with transport type
+7. Review, copy, share, or export the advisory as PDF
 
 ---
 
@@ -203,14 +239,21 @@ npm run build
 ---
 
 ## 🏁 Conclusion
-AI Haor Guardian demonstrates how AI can be applied to wetland and coastal decision support. By combining location selection, map visualization, and Gemini-powered advisory generation, the project provides an accessible way to understand weather, fish activity, and storm risk in a chosen area.
+Global Wetland Guardian demonstrates how AI can serve diverse user groups in wetland and coastal regions worldwide. By combining global location selection, comprehensive insights for tourists, fishermen, workers, and communities, and Gemini-powered advisory generation, the project provides an accessible way to understand weather, fish activity, wildlife, and storm risk for any wetland area.
 
-The system is especially useful for research demos, climate-resilience prototypes, and public-facing wetland intelligence dashboards.
+The system serves:
+- **Tourists** exploring wetland ecosystems
+- **Fishermen** working in wetland waters
+- **Workers** maintaining wetland areas
+- **Local Communities** living in wetland regions
+- **Travelers** passing through wetland areas
+
+Perfect for research demos, climate-resilience prototypes, tourism safety platforms, and community-facing wetland intelligence dashboards worldwide.
 
 ---
 
 ## 🖊️ Citation
-**global-wetland-guardian (2026). Satellite-Assisted Wetland Intelligence & AI Early Warning Dashboard for Wetland and Coastal Regions.**
+**global-wetland-guardian (2026). Comprehensive AI-Powered Wetland Intelligence Dashboard Serving Tourists, Fishermen, Workers, and Communities Worldwide.**
 
 ---
  

@@ -46,11 +46,12 @@ export interface WetlandInsightData {
   };
 }
 
-export interface FishermanProfile {
+export interface UserProfile {
   name: string;
   phone: string;
-  haor: string;
-  boatType: string;
+  location: string;
+  transportType: string;
+  userType?: 'tourist' | 'fisherman' | 'worker' | 'local' | 'traveler';
 }
 
 export interface GroundingSource {
@@ -64,13 +65,17 @@ export interface MapData {
   sources: GroundingSource[];
 }
 
-export const HAOR_LIST = [
-  "Tanguar Haor",
-  "Hakaluki Haor",
-  "Dekhar Haor",
-  "Kowadighi Haor",
-  "Shimulbil Haor",
-  "Hail Haor"
+export const WETLAND_LIST = [
+  'Sundarbans (Bangladesh/India)',
+  'Everglades (USA)',
+  'Pantanal (Brazil)',
+  'Okavango Delta (Botswana)',
+  'Camargue (France)',
+  'Kakadu Wetlands (Australia)',
+  'Danube Delta (Romania)',
+  'Mekong Delta (Vietnam)',
+  'Amazon Wetlands (Brazil)',
+  'Chilika Lake (India)'
 ];
 
 export type Language = string;
