@@ -132,13 +132,11 @@ Because the system uses live AI generation, the content adapts to the selected l
 Below is the gallery layout.
 
 <p align="center">
-  <img width="400" height="400" alt="project screenshot 1" src="https://github.com/user-attachments/assets/f8ae5d4f-c27a-4341-a4cd-7b8451266971" />
-  <img width="400" height="400" alt="project screenshot 2" src="https://github.com/user-attachments/assets/6571ce1b-0714-499e-ae77-ef120069fe55" />
+  
 </p>
 
 <p align="center">
-  <img width="400" height="500" alt="project screenshot 3" src="https://github.com/user-attachments/assets/78b57b99-c417-4ce0-a6b4-a8438953e1be" />
-  <img width="400" height="300" alt="project screenshot 4" src="https://github.com/user-attachments/assets/c45505b0-2566-4f0a-9be7-7ed4fa199ac9" />
+ 
 </p>
 
 ---
