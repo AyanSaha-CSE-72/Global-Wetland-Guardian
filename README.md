@@ -159,7 +159,8 @@ The system adapts content based on user needs - whether for fishing, tourism, wo
 
 ## 🖼️ Project Gallery
 
-Below is the gallery layout.
+<img width="1536" height="1024" alt="WhatsApp Image 2026-07-15 at 2 14 10 PM" src="https://github.com/user-attachments/assets/c0b7b385-576c-416d-b655-b8ac961babe3" />
+
 
 <p align="center">
   
