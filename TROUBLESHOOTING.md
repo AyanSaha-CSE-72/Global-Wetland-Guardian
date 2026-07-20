@@ -4,21 +4,27 @@
 
 If you're getting "Network error, please try again" when using the AI chat, follow these steps:
 
-### 1. Verify API Key is Loaded
+### 1. Create .env.local File
+
+The project requires a `.env.local` file in the root directory with your Gemini API key.
+
+1. Copy the example file:
+```bash
+cp .env.local.example .env.local
+```
+
+2. Edit `.env.local` and add your API key:
+```
+VITE_GEMINI_API_KEY=your_actual_api_key_here
+```
+
+3. Get your API key from: https://aistudio.google.com/app/apikey
+
+### 2. Verify API Key is Loaded
 
 1. Open your browser's Developer Console (F12)
 2. Look for the log message: `API Key Status: Loaded (AIzaSyAb8R...)`
 3. If you see `API Key Status: MISSING`, your API key is not loaded
-
-### 2. Check .env.local File
-
-Make sure your `.env.local` file exists in the root directory and contains:
-
-```
-VITE_GEMINI_API_KEY=AIzaSyAb8RN6IIUqeyxuFWIxDDcOW9-Q-_37tzsWZDRzxvXM
-```
-
-**Important:** Vite only reads `.env` files at build time!
 
 ### 3. Restart the Development Server
 
@@ -29,6 +35,8 @@ After creating or modifying `.env.local`:
 # Then restart:
 npm run dev
 ```
+
+**Important:** Vite only reads `.env` files at build time! You must restart after changes.
 
 ### 4. Clear Browser Cache
 

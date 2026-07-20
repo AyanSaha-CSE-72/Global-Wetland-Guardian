@@ -1,4 +1,4 @@
-# 🌊 global-wetland-guardian
+# 🌊 Global Wetland Guardian AI
 ### *Satellite-Assisted Wetland Intelligence & AI Early Warning Dashboard*
 **Category:** AI • Climate Resilience • Wetland Monitoring • Early Warning Systems
 
@@ -6,6 +6,8 @@
   <img src="https://img.shields.io/badge/AI%20Model-Gemini%20%7C%20LLM-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/Wetland%20Insight-Weather%20%7C%20Fish%20%7C%20Storm-orange?style=for-the-badge">
   <img src="https://img.shields.io/badge/Interactive%20Map-Google%20Maps-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript%20%7C%20Vite-cyan?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Styling-Tailwind%20CSS-purple?style=for-the-badge">
 </p>
 
 ---
@@ -181,35 +183,182 @@ The system adapts content based on user needs - whether for fishing, tourism, wo
 
 ---
 
-## 🚀 Setup
+## 🚀 Setup Instructions
 
-### 1. Install dependencies
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+- Google Gemini API Key
+
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/your-username/Global-Wetland-Guardian.git
+cd Global-Wetland-Guardian
+```
+
+### Step 2: Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Create an environment file
-Create a `.env.local` file in the project root and add one of these keys:
+This will install all required packages including:
+- React 19.2.0
+- TypeScript 5.8.2
+- Vite 6.2.0
+- @google/genai 1.30.0
+- Tailwind CSS 3.4.19
+- React Router DOM 7.9.6
+- jsPDF 2.5.2
+- Lucide React 0.555.0
+
+### Step 3: Configure Environment Variables
+Create a `.env.local` file in the project root using the provided template:
 
 ```bash
-GEMINI_API_KEY=your_api_key_here
+cp .env.local.example .env.local
 ```
 
-or
+Then edit `.env.local` and add your Gemini API key:
 
 ```bash
-VITE_GEMINI_API_KEY=your_api_key_here
+VITE_GEMINI_API_KEY=your_actual_api_key_here
 ```
 
-### 3. Run the project
+**Get your API key from:** https://aistudio.google.com/app/apikey
+
+### Step 4: Run the Development Server
 ```bash
 npm run dev
 ```
 
-### 4. Build for production
+The application will be available at `http://localhost:5173`
+
+### Step 5: Build for Production
 ```bash
 npm run build
 ```
+
+The optimized production files will be in the `dist/` directory.
+
+### Step 6: Preview Production Build
+```bash
+npm run preview
+```
+
+---
+
+## 🛠️ Development Workflow
+
+### Project Structure
+```
+Global-Wetland-Guardian/
+├── components/          # React components
+│   ├── CountryLocationSelector.tsx
+│   └── Layout.tsx
+├── contexts/            # React contexts
+│   └── LanguageContext.tsx
+├── pages/              # Page components
+│   ├── Home.tsx
+│   ├── Dashboard.tsx
+│   ├── Chat.tsx
+│   ├── Map.tsx
+│   ├── Alerts.tsx
+│   └── About.tsx
+├── services/           # API services
+│   ├── gemini.ts       # Gemini AI integration
+│   └── countryRegions.ts
+├── types.ts            # TypeScript type definitions
+├── App.tsx             # Main app component
+├── index.tsx           # Entry point
+├── tailwind.config.js  # Tailwind configuration
+├── vite.config.ts      # Vite configuration
+└── tsconfig.json       # TypeScript configuration
+```
+
+### Available Scripts
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+
+### Environment Variables
+- `VITE_GEMINI_API_KEY` - Required for Gemini AI API access
+
+---
+
+## 🧠 AI Integration Details
+
+### Gemini API Usage
+The project uses Google's Gemini AI model (gemini-2.5-flash) for:
+
+1. **Wetland Prediction Analysis**
+   - Water level risk assessment
+   - Storm and wind risk prediction
+   - Fish and wildlife activity analysis
+   - Route safety scoring
+
+2. **Safety Alert Generation**
+   - Personalized advisories based on user type
+   - Transport-specific recommendations
+   - Emergency guidance
+
+3. **Interactive Chat Assistant**
+   - Context-aware wetland Q&A
+   - Multi-language support (English, Bengali)
+   - Real-time safety information
+
+4. **Map Integration**
+   - Google Maps location analysis
+   - Ecosystem information extraction
+   - Tourism and fishing zone identification
+
+### API Rate Limiting & Error Handling
+- Exponential backoff retry mechanism (max 3 retries)
+- Comprehensive error classification
+- User-friendly error messages
+- Network error recovery
+
+---
+
+## 🌍 Supported Languages
+The application supports 50+ languages including:
+- English, Bengali, Hindi, Spanish, French
+- Chinese, Japanese, Korean, Arabic
+- Portuguese, Russian, German, Italian
+- And many more regional languages
+
+---
+
+## 🔒 Security Considerations
+- API keys are stored in environment variables (never committed to git)
+- .env.local files are gitignored
+- No sensitive data is stored in browser localStorage
+- All API calls are made client-side with proper error handling
+
+---
+
+## 🐛 Troubleshooting
+
+For common issues and solutions, please refer to [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+
+Common issues:
+- **Network Error in Chat**: Check API key configuration and restart dev server
+- **API Key Missing**: Ensure .env.local file exists with valid API key
+- **Build Errors**: Clear node_modules and reinstall dependencies
+
+---
+
+## 📄 License
+This project is open source and available under the MIT License.
+
+---
+
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+## 📞 Support
+For issues and questions, please open an issue on GitHub.
 
 ---
 
